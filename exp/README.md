@@ -18,8 +18,10 @@ using `exp -h` show help information.
 exp -h
 ```
 
+```
 exp -h
 exp [-e] [-i] [-f FILE] [-D...] [EXPR]
+```
 
 **Opts**
 
