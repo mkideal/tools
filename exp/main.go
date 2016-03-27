@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math"
 	"math/rand"
+	"os"
+	"strings"
 	"time"
+	"unicode"
 
 	"github.com/mkideal/cli"
 	"github.com/mkideal/pkg/expr"
@@ -13,7 +17,43 @@ import (
 type argT struct {
 	cli.Helper
 	Variables map[string]float64 `cli:"D" usage:"define variables, e.g. -Dx=3 -Dy=4"`
-	OutExpr   bool               `cli:"e" usage:"whther ouput native expression" dft:"false"`
+	OutExpr   bool               `cli:"e" usage:"whther output native expression" dft:"false"`
+	File      string             `cli:"f,file" usage:"read expr from file"`
+	Stdin     bool               `cli:"i,stdin" usage:"read expr from stdin" sdt:"false"`
+
+	args []string `cli:"-"`
+}
+
+func (argv *argT) Validate(ctx *cli.Context) error {
+	argv.args = ctx.FreedomArgs()
+
+	dataList := make([]string, 0)
+	if argv.File != "" {
+		data, err := ioutil.ReadFile(argv.File)
+		if err != nil {
+			return err
+		}
+		dataList = append(dataList, string(data))
+	}
+	if argv.Stdin {
+		if data, err := ioutil.ReadAll(os.Stdin); err != nil {
+			return err
+		} else if len(data) > 0 {
+			dataList = append(dataList, string(data))
+		}
+	}
+	for _, data := range dataList {
+		args := strings.Split(strings.TrimSpace(data), "\n")
+		for _, arg := range args {
+			arg = strings.TrimFunc(arg, func(r rune) bool {
+				return unicode.IsSpace(r) || r == '"' || r == '\''
+			})
+			if arg != "" {
+				argv.args = append(argv.args, arg)
+			}
+		}
+	}
+	return nil
 }
 
 func run(ctx *cli.Context, argv *argT) error {
@@ -31,7 +71,7 @@ func run(ctx *cli.Context, argv *argT) error {
 		getter[k] = v
 	}
 
-	for _, s := range ctx.FreedomArgs() {
+	for _, s := range argv.args {
 		e, err := expr.New(s, pool)
 		if err != nil {
 			return err
