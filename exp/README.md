@@ -14,10 +14,6 @@ go get github.com/tools/exp
 
 using `exp -h` show help information.
 
-```shell
-exp -h
-```
-
 ```
 exp -h
 exp [-e] [-i] [-f FILE] [-D...] [EXPR]
@@ -25,19 +21,21 @@ exp [-e] [-i] [-f FILE] [-D...] [EXPR]
 
 **Opts**
 
-*-e*
+```
+-e
 	show native expression before expression result.
 	`exp x -Dx=1`		=> `1`
 	`exp -e x -Dx=1`	=> `x: 1`
 
-*-i*
+-i
 	read expression from stdin
 
-*-f FILE*
+-f FILE
 	read expression from FILE
 
-*-D*
+-D
 	define variable. e.g. `-Dx=3` `-Da=1 -Db=2` `-D x=1 -D y=2`
+```
 
 ## Examples
 
@@ -54,8 +52,8 @@ exp 'rand(n)' -Dn=100
 exp 'rand(1,to)' -Dto=5
 exp 'sum(1,2,3)'
 exp 'aver(1,2,3)'
-exp x y x+y x-y x*y x/y x%%y x^y -Dx=7 -Dy=2
-exp -e x y x+y x-y x*y x/y x%%y x^y -Dx=7 -Dy=2
+exp x y x+y x-y x*y x/y x%y x^y -Dx=7 -Dy=2
+exp -e x y x+y x-y x*y x/y x%y x^y -Dx=7 -Dy=2
 exp 'sin(pi)' 'sin(pi/2)'
 exp e
 exp pi
