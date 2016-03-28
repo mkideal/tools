@@ -27,7 +27,7 @@ func run(ctx *cli.Context, argv *argT) error {
 		}
 		urlStr := fmt.Sprintf("%s://%s%s?%s", "http", readdr, req.URL.Path, req.URL.RawQuery)
 		ctx.String("redirect from %q to %q\n", req.URL.Path, urlStr)
-		http.Redirect(w, req, urlStr, http.StatusUseProxy)
+		http.Redirect(w, req, urlStr, http.StatusFound)
 	}))
 }
 
