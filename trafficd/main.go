@@ -10,7 +10,7 @@ import (
 type argT struct {
 	cli.Helper
 	cli.Addr
-	Maps map[string]string `cli:"M" usage:"addr mapping"`
+	Maps map[string]uint16 `cli:"M" usage:"addr mapping"`
 }
 
 func (argv *argT) Validate(ctx *cli.Context) error {
@@ -20,18 +20,18 @@ func (argv *argT) Validate(ctx *cli.Context) error {
 
 func run(ctx *cli.Context, argv *argT) error {
 	if argv.Maps == nil {
-		argv.Maps = make(map[string]string)
+		argv.Maps = make(map[string]uint16)
 	}
 	ctx.JSONIndentln(argv.Maps, "", "    ")
 	addr := fmt.Sprintf("%s:%d", argv.Host, argv.Port)
 	return http.ListenAndServe(addr, http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		ctx.String("req: %v", *req)
-		readdr, ok := argv.Maps[req.Host]
+		port, ok := argv.Maps[req.Host]
 		if !ok {
 			fmt.Fprintf(w, "could not redirect %q to new address", req.Host)
 			return
 		}
-		urlStr := fmt.Sprintf("%s://%s%s?%s", "http", readdr, req.URL.Path, req.URL.RawQuery)
+		urlStr := fmt.Sprintf("%s://%s:%d%s?%s", "http", req.Host, port, req.URL.Path, req.URL.RawQuery)
 		ctx.String("redirect from %q to %q\n", req.URL.Path, urlStr)
 		http.Redirect(w, req, urlStr, http.StatusUseProxy)
 	}))

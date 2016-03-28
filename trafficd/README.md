@@ -28,19 +28,21 @@ trafficd [--host] [--port=8080] [-M...]
 --port
 	trafficd listening port, default is 8080.
 
--M
+-M<DN>=<PORT>
 	define map rules. e.g.
-	`-M www.example.com=www.example.com:9090 example.com=www.example.com:9090`
+	`-M www.example.com=9090 example.com=9090`
 ```
 
 ## Examples
 
 ```shell
-sudo trafficd --port=80 -M 127.0.0.1=127.0.0.1:8080
+sudo trafficd --port=80 -M 127.0.0.1=8080
 ```
 
 ```shell
-sudo trafficd --port=80 -M www.a.com=www.a.com:8080 -M www.b.com=www.b.com.9090
+sudo trafficd --port=80 -M www.a.com=8080 -M www.b.com=9090
 ```
+
+Now, "www.a.com" will redirect to "www.a.com:8080", "www.b.com" will redirect to "www.b.com:9090"
 
 So, you can build many web sites in a same host(binding same IP for all domains).
