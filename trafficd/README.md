@@ -40,7 +40,7 @@ sudo trafficd --port=80 -M 127.0.0.1=127.0.0.1:8080
 ```
 
 ```shell
-sudo trafficd --port=80 -M www.a.com=www.me.com:8080 -M www.b.com=www.me.com.9090
+sudo trafficd --port=80 -M www.a.com=www.a.com:8080 -M www.b.com=www.b.com.9090
 ```
 
-So, you can build many web sites in a same host.
+So, you can build many web sites in a same host(binding same IP for all domains).
