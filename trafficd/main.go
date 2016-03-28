@@ -28,10 +28,10 @@ func run(ctx *cli.Context, argv *argT) error {
 		ctx.String("req: %v", *req)
 		readdr, ok := argv.Maps[req.Host]
 		if !ok {
-			fmt.Fprintf(w, "could not redirect %q to new address", req.URL.Host)
+			fmt.Fprintf(w, "could not redirect %q to new address", req.Host)
 			return
 		}
-		urlStr := fmt.Sprintf("%s://%s%s?%s", "http", readdr, req.URL.RawPath, req.URL.RawQuery)
+		urlStr := fmt.Sprintf("%s://%s%s?%s", "http", readdr, req.URL.Path, req.URL.RawQuery)
 		ctx.String("redirect from %q to %q\n", req.URL.Path, urlStr)
 		http.Redirect(w, req, urlStr, http.StatusUseProxy)
 	}))
