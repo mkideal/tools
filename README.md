@@ -7,3 +7,4 @@
 `tools` contains some utility command line app.
 
 * [**exp**](./exp/README.md) - `evaluate expression`
+* [**trafficd**](./trafficd/README.md) - `traffic redirect`
