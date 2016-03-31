@@ -7,7 +7,7 @@
 ## Install
 
 ```shell
-go get github.com/tools/exp
+go get github.com/mkideal/tools/exp
 ```
 
 ## Usage

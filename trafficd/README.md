@@ -7,7 +7,7 @@
 ## Install
 
 ```shell
-go get github.com/tools/trafficd
+go get github.com/mkideal/tools/trafficd
 ```
 
 ## Usage
