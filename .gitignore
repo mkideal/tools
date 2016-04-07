@@ -1,1 +1,4 @@
 *.swp
+exp/exp
+trafficd/trafficd
+smtpd/smtpd
