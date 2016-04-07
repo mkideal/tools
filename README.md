@@ -8,3 +8,4 @@
 
 * [**exp**](./exp/README.md) - `evaluate expression`
 * [**trafficd**](./trafficd/README.md) - `traffic redirect`
+* [**smtpd**](./smtpd/README.md) - `smtp server`
