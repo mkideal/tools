@@ -2,6 +2,7 @@ package main
 
 import (
 	buffer "bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"text/template"
@@ -14,7 +15,7 @@ type argT struct {
 	cli.Helper
 	TemplateFile string `cli:"t,template" usage:"template file, if TPL is empty, then read template from stdin" name:"TPL"`
 
-	Out string            `cli:"o,out" usage:"write to specify file instead of stdout"`
+	Out string            `cli:"o,out" usage:"write to specified file instead of stdout"`
 	M   map[string]string `cli:"M" usage:"map values(e.g. -Ma=A -Mkey=value)"`
 }
 
@@ -42,6 +43,9 @@ func run(ctx *cli.Context, argv *argT) error {
 	}
 	if err != nil {
 		return err
+	}
+	if t == nil {
+		return fmt.Errorf("unknown error")
 	}
 	t.Option("missingkey=zero")
 	// output file
