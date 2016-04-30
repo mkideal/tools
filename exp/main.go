@@ -83,7 +83,7 @@ func run(ctx *cli.Context, argv *argT) error {
 		if argv.OutExpr {
 			ctx.String("%s: ", s)
 		}
-		ctx.String("%G\n", ret)
+		ctx.String("%.9G\n", ret)
 	}
 	return nil
 }

@@ -1,7 +1,6 @@
 package main
 
 import (
-	buffer "bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -9,6 +8,7 @@ import (
 
 	"github.com/labstack/gommon/color"
 	"github.com/mkideal/cli"
+	"github.com/mkideal/pkg/textutil"
 )
 
 type argT struct {
@@ -68,7 +68,7 @@ func main() {
 			return nil
 		}
 		return run(ctx, argv)
-	}, tpl(`{{.tpler}} is a template generator built by github.com/mkideal/cli
+	}, Tpl(`{{.tpler}} is a template generator built by github.com/mkideal/cli
 
 {{.Usage}}: tpler [-h | --help]
        tpler [-o | --out={{.OUT}}] [-M...] <-t | --tpl={{.TPL}}>
@@ -84,17 +84,4 @@ func main() {
 		"OUT":      color.Bold("OUT"),
 		"TPL":      color.Bold("TPL"),
 	}))
-}
-
-func tpl(text string, data map[string]string) string {
-	t := template.New(text)
-	t, err := t.Parse(text)
-	if err != nil {
-		panic(err)
-	}
-	buf := buffer.NewBufferString("")
-	if err := t.Execute(buf, data); err != nil {
-		panic(err)
-	}
-	return buf.String()
 }
