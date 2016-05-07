@@ -68,7 +68,7 @@ func main() {
 			return nil
 		}
 		return run(ctx, argv)
-	}, Tpl(`{{.tpler}} is a template generator built by github.com/mkideal/cli
+	}, textutil.Tpl(`{{.tpler}} is a template generator built by github.com/mkideal/cli
 
 {{.Usage}}: tpler [-h | --help]
        tpler [-o | --out={{.OUT}}] [-M...] <-t | --tpl={{.TPL}}>

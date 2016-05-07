@@ -25,7 +25,7 @@ type argT struct {
 }
 
 func (argv *argT) Validate(ctx *cli.Context) error {
-	argv.args = ctx.FreedomArgs()
+	argv.args = ctx.Args()
 
 	dataList := make([]string, 0)
 	if argv.File != "" {
